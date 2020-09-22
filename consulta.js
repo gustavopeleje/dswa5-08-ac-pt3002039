@@ -3,7 +3,7 @@ const findDocuments = function(db, callback) {
     const collection = db.collection('contatos');
     //Find some documents
     collection.find({}).toArray(function(err, docs) {
-        assert.equall(err.null);
+        assert.equal(err. null);
         console.log("Foram encontrados os seguintes docs:");
         console.log(docs)
         callback(docs);
