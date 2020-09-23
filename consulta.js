@@ -12,13 +12,13 @@ const findDocuments = function(db, callback) {
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 // Connection URL
-const url = 'mongodb+srv://DSWA5:aretuza123@clusterdswa5-x96ld.mongodb.net/ifsp?retryWrites=true&w=majority';
+const url = 'mongodb+srv://DSWA5:aretuza123@cluster0.cjyyi.mongodb.net/ifsp?retryWrites=true&w=majority';
 // Database Name
 const dbName = 'ifsp';
 // Use connect method to connect to the server
 MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function(err, client) {
     assert.equal(null, err);
-    console.log("Aluno: Jader Thomé");
+    console.log("Aluno: Nome do aluno");
     console.log("Servidor conectado!");
 
     const db = client.db(dbName);
