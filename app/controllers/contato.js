@@ -1,9 +1,9 @@
 var ID_CONTATO_INC = 3;
 
 var contatos = [
-    { _id: 1, nome: 'Fabio Teixeira', email: 'fabio.teixeira@ifsp.edu.br' },
-    { _id: 2, nome: 'Fabiano Teixeira', email: 'fabiano.teixeira@ifsp.edu.br' },
-    { _id: 3, nome: 'Melissa Teixeira', email: 'melissa.teixeira@ifsp.edu.br' }
+    { _id: 1, nome: 'Jader Thomé', email: 'jader.Thomé@ifsp.edu.br' }, 
+    { _id: 2, nome: 'Aretuza Thomé', email: 'aretuza.Thomé@ifsp.edu.br' }, 
+    { _id: 3, nome: 'Bernarda Thomé', email: 'bb.Thomé@ifsp.edu.br' }
 ]
 
 module.exports = function() {
