@@ -11,7 +11,7 @@ module.exports = function(uri) {
     });
 
     mongoose.connection.on('error', function(erro) {
-        console.log('Mongoose! Erro na conexão: ' + uri);
+        console.log('Mongoose! Erro na conexão: ' + erro);
     });
 
     process.on('SIGINT', function() {
