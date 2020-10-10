@@ -56,7 +56,8 @@ module.exports = function(app) {
                     res.status(500).json(erro);
                 });
         }else{
-            Curso.create(req.body).then(
+            Curso.create(req.body).then( 
+                
                function(curso){
                    res.status(201).json(curso);
                },
