@@ -1,38 +1,23 @@
 var ID_CONTATO_INC = 3;
 
 var contatos = [
-    { _id: 1, nome: 'Jader Thomé', email: 'jader.Thomé@ifsp.edu.br' }, 
-    { _id: 2, nome: 'Aretuza Thomé', email: 'aretuza.Thomé@ifsp.edu.br' }, 
-    { _id: 3, nome: 'Bernarda Thomé', email: 'bb.Thomé@ifsp.edu.br' }
+    { _id: 1, nome: 'gustavo', email: 'gustavo@ifsp.edu.br' }, 
+    { _id: 2, nome: 'teste', email: 'teste@ifsp.edu.br' }
 ]
 
-module.exports = function(app) {
-    var Contato = app.models.contato;
+module.exports = function() {
     var controller = {};
     controller.listaContatos = function(req, res) {
-        Contato.find().exec().then(
-            function(contatos) {
-                res.json(contatos);
-            },
-            function(erro) {
-                console.error(erro)
-                res.status(500).json(erro);
-            });
-        
+        res.json(contatos)
     };
     controller.obtemContato = function(req, res) {
-        var _id = req.params.id;
-        Contato.findById(_id).exe().then(
-            function(contato) {
-                if (!contato) throw new Error("Contato não encontrado");
-                res.json(contato)
-            },
-            function(erro) {
-                console.log(erro);
-                res.status(404).json(erro)
-            });
-
-    };
+		console.log('Selecionou o contato: ' + req.params.id);
+		var idContato = req.params.id;
+		var contato = contatos.filter(function(contato){
+			return contato._id == idContato;
+		})[0];
+		contato ? res.json(contato) : res.status(404).send('Contato não encontrado!');
+	};
     controller.removeContato = function(req, res) {
         var _id = req.params.id;
         Contato.deleteOne({ "_id": _id}).exec().then(
@@ -45,26 +30,9 @@ module.exports = function(app) {
 
         };
     controller.salvaContato = function(req, res) {
-        var _id=req.body._id;
-        if(_id){
-            Contato.findByldAndUpdate(_id,req.body).exec().then(
-                function(contato){
-                    res.json(contato);
-                },
-                function(erro){
-                    console.error(erro);
-                    res.status(500).json(erro);
-                });
-        }else{
-            Contato.create(req.body).then(
-               function(contato){
-                   res.status(201).json(contato);
-               },
-               function(erro){
-                   console.log(erro);
-                   res.status(500).json(erro);
-               });
-        }
+        var contato = req.body;
+        contato = contato._id ? atualiza(contato) : adiciona(contato);
+        res.json(contato);
     };
 
     function adiciona(contatoNovo) {

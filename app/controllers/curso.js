@@ -7,32 +7,20 @@ var cursos = [
     { _id: 4, curso: 'Tecnologia em Gestão Pública', coordenador: 'aretuza.thome@ifsp.edu.br' }
 ]
 
-module.exports = function(app) {
-    var Curso = app.models.curso;
+
+module.exports = function() {
     var controller = {};
     controller.listaCursos = function(req, res) {
-        Curso.find().exec().then(
-            function(cursos) {
-                res.json(cursos);
-            },
-            function(erro) {
-                console.error(erro)
-                res.status(500).json(erro);
-            });
+        res.json(cursos)
     };
     controller.obtemCurso = function(req, res) {
-        var _id = req.params.id;
-        Curso.findById(_id).exe().then(
-            function(curso) {
-                if (!curso) throw new Error("Curso não encontrado");
-                res.json(curso)
-            },
-            function(erro) {
-                console.log(erro);
-                res.status(404).json(erro)
-            });
-
-    };
+		console.log('Selecionou o curso: ' + req.params.id);
+		var idCurso = req.params.id;
+		var curso = cursos.filter(function(curso){
+			return curso._id == idCurso;
+		})[0];
+		curso ? res.json(curso) : res.status(404).send('Curso não encontrado!');
+	};
     controller.removeCurso = function(req, res) {
         var _id = req.params.id;
         Curso.deleteOne({ "_id": _id}).exec().then(
@@ -45,27 +33,9 @@ module.exports = function(app) {
 
         };
     controller.salvaCurso = function(req, res) {
-        var _id=req.body._id;
-        if(_id){
-            Curso.findByldAndUpdate(_id,req.body).exec().then(
-                function(curso){
-                    res.json(curso);
-                },
-                function(erro){
-                    console.error(erro);
-                    res.status(500).json(erro);
-                });
-        }else{
-            Curso.create(req.body).then( 
-                
-               function(curso){
-                   res.status(201).json(curso);
-               },
-               function(erro){
-                   console.log(erro);
-                   res.status(500).json(erro);
-               });
-        }
+        var curso = req.body;
+        curso = curso._id ? atualiza(curso) : adiciona(curso);
+        res.json(curso);
     };
 
     function adiciona(cursoNovo) {
@@ -81,6 +51,7 @@ module.exports = function(app) {
             }
             return curso;
         });
+
         return cursoAlterar;
     }
 
